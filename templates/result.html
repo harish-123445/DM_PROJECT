@@ -3,36 +3,59 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EDA</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/styles.css') }}"
-    />
+    <title>Netflix Recommendations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   </head>
 
   <body>
-    <div class="base-layer">
+    <div class="f-layer">
       <h1 class="title">NETFLIX</h1>
-      <p class="sub-title">MOVIES and SHOWS RECOMMENDATION SYSTEM</p>
+      <p class="sub-title">RECOMMENDATION RESULTS</p>
     </div>
-    <div class="second-layer">
+    <div class="s-layer">
       <div class="results">
-        <p class="result-title">Content Similar to {{ org }} are:</p>
-        {% if movies %} {% for movie in movies %}
-        <div class="movie-container">
-          <h2 class="movie-details-title">{{ movie['title'] }}</h2>
-          <div class="movie-details"><span class="black-text">Type: </span> {{ movie['type'] }}</div>
-          <div class="movie-details"><span class="black-text">Date Added: </span>{{ movie['date_added'] }}</div>
-          <div class="movie-details"><span class="black-text">Release Year: </span>{{ movie['release_year'] }}
+        <p class="result-title">
+          <i class="fas fa-video"></i> Content Similar to "{{ org }}"
+        </p>
+        
+        {% if movies %}
+          <div class="movie-results">
+            {% for movie in movies %}
+              <div class="movie-container">
+                {% if movie['poster'] %}
+                <div class="poster-container">
+                  <img src="{{ movie['poster'] }}" alt="{{ movie['title'] }} poster" class="movie-poster">
+                </div>
+                {% endif %}
+                <h2 class="movie-details-title">{{ movie['title'] }}</h2>
+                <div class="movie-details">
+                  <span class="black-text"><i class="fas fa-film"></i> Type:</span> {{ movie['type'] }}
+                </div>
+                <div class="movie-details">
+                  <span class="black-text"><i class="fas fa-calendar-alt"></i> Date Added:</span> {{ movie['date_added'] }}
+                </div>
+                <div class="movie-details">
+                  <span class="black-text"><i class="fas fa-calendar-check"></i> Release Year:</span> {{ movie['release_year'] }}
+                </div>
+                <div class="movie-details">
+                  <span class="black-text"><i class="fas fa-star"></i> Rating:</span> {{ movie['rating'] }}
+                </div>
+                <div class="movie-details">
+                  <span class="black-text"><i class="fas fa-info-circle"></i> Description:</span> {{ movie['description'] }}
+                </div>
+              </div>
+            {% endfor %}
           </div>
-          <div class="movie-details"><span class="black-text">Rating: </span>{{ movie['rating'] }}</div>
-          <div class="movie-details"><span class="black-text">Description: </span>{{ movie['description'] }}
-          </div>
-        </div>
-        {% endfor %} 
         {% else %}
-        <span class="error">{{error}}</span>
+          <div class="error">
+            <i class="fas fa-exclamation-triangle"></i> {{error}}
+          </div>
         {% endif %}
+        
+        <div class="end-link">
+          <a href="/" class="home-button"><i class="fas fa-home"></i> Back to Home</a>
+        </div>
       </div>
     </div>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>

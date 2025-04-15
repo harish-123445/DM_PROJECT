@@ -16,6 +16,5 @@ def find_similar_movie(movie_name):
     final_lst.update(find_similar_movie_mean_shift(movie_name))
     final_lst.update(find_similar_movie_birch(movie_name))
     final_lst.update(find_similar_movie_kmeans(movie_name))
-    print(final_lst)
     return list(final_lst)
 
